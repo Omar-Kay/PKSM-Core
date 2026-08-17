@@ -182,6 +182,10 @@ namespace pksm
 
     std::unique_ptr<Sav> Sav::checkGBAType(const std::shared_ptr<u8[]>& dt)
     {
+        if (!Sav3::isValid(dt))
+        {
+            return std::unique_ptr<Sav>(nullptr);
+        }
         switch (Sav3::getVersion(dt))
         {
             case Game::RS:

@@ -55,6 +55,7 @@ namespace pksm
         void loadBlocks();
         [[nodiscard]] static std::array<int, BLOCK_COUNT> getBlockOrder(
             const std::shared_ptr<u8[]>& dt, int ofs);
+        [[nodiscard]] static bool allBlocksPresent(const std::array<int, BLOCK_COUNT>& order);
         [[nodiscard]] static int getActiveSaveIndex(const std::shared_ptr<u8[]>& dt,
             std::array<int, BLOCK_COUNT>& blockOrder1, std::array<int, BLOCK_COUNT>& blockOrder2);
 
@@ -101,6 +102,7 @@ namespace pksm
     public:
         static constexpr int SIZE_BLOCK = 0x1000;
         [[nodiscard]] static Game getVersion(const std::shared_ptr<u8[]>& dt);
+        [[nodiscard]] static bool isValid(const std::shared_ptr<u8[]>& dt);
 
         void resign(void);
 
