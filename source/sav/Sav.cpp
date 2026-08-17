@@ -169,6 +169,11 @@ namespace pksm
             return std::make_unique<Sav2>(dt, length, versionAndLanguage);
         }
 
+        if (!Sav1::isValid(dt))
+        {
+            return std::unique_ptr<Sav>(nullptr);
+        }
+
         switch (Sav1::getVersion(dt))
         {
             case Game::RGB:

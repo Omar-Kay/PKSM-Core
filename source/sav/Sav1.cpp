@@ -27,6 +27,7 @@
 #include "sav/Sav1.hpp"
 #include "pkx/PK1.hpp"
 #include "pkx/PKX.hpp"
+#include "sav/Sav2.hpp"
 #include "utils/crypto.hpp"
 #include "utils/endian.hpp"
 #include "utils/flagUtil.hpp"
@@ -76,6 +77,12 @@ namespace pksm
         // for now it doesn't matter, the only difference is Pikachu's friendship and Pikachu surf
         // score
         return Game::RGB;
+    }
+
+    bool Sav1::isValid(const std::shared_ptr<u8[]>& dt)
+    {
+        return (Sav2::validList(dt, 0x2F2C, 20) && Sav2::validList(dt, 0x30C0, 20)) ||
+               (Sav2::validList(dt, 0x2ED5, 30) && Sav2::validList(dt, 0x302D, 30));
     }
 
     // max length of string + terminator

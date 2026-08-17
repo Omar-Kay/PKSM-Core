@@ -55,6 +55,7 @@ namespace pksm
         Sav1(const std::shared_ptr<u8[]>& data, u32 length);
 
         [[nodiscard]] static Game getVersion(const std::shared_ptr<u8[]>& dt);
+        [[nodiscard]] static bool isValid(const std::shared_ptr<u8[]>& dt);
 
         void finishEditing(void) override;
 
