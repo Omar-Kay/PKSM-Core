@@ -101,6 +101,7 @@ namespace pksm
             case 0x100000:
                 ret = std::make_unique<SavLGPE>(dt, length);
                 break;
+            // Switch-era saves: only construct when the whole-file hash is intact
             case SavSWSH::SIZE_G8SWSH:
             case SavSWSH::SIZE_G8SWSH_1:
             case SavSWSH::SIZE_G8SWSH_2:
@@ -109,11 +110,17 @@ namespace pksm
             case SavSWSH::SIZE_G8SWSH_3A:
             case SavSWSH::SIZE_G8SWSH_3B:
             case SavSWSH::SIZE_G8SWSH_3C:
-                ret = std::make_unique<SavSWSH>(dt, length);
+                if (pksm::crypto::swsh::verify(dt, length))
+                {
+                    ret = std::make_unique<SavSWSH>(dt, length);
+                }
                 break;
             case SavPLA::SIZE_G8PLA:
             case SavPLA::SIZE_G8PLA_1:
-                ret = std::make_unique<SavPLA>(dt, length);
+                if (pksm::crypto::swsh::verify(dt, length))
+                {
+                    ret = std::make_unique<SavPLA>(dt, length);
+                }
                 break;
             // SV base game sizes
             case SavSV::SIZE_G9SV_0:
@@ -142,13 +149,19 @@ namespace pksm
             case SavSV::SIZE_G9SV_DLC2_202_MIN ... SavSV::SIZE_G9SV_DLC2_202_END:
             case SavSV::SIZE_G9SV_DLC1_300_MIN ... SavSV::SIZE_G9SV_DLC1_300_END:
             case SavSV::SIZE_G9SV_DLC2_300_MIN ... SavSV::SIZE_G9SV_DLC2_300_END:
-                ret = std::make_unique<SavSV>(dt, length);
+                if (pksm::crypto::swsh::verify(dt, length))
+                {
+                    ret = std::make_unique<SavSV>(dt, length);
+                }
                 break;
             case SavZA::SIZE_G9ZA_100:
             case SavZA::SIZE_G9ZA_102:
             case SavZA::SIZE_G9ZA_200:
             case SavZA::SIZE_G9ZA_201:
-                ret = std::make_unique<SavZA>(dt, length);
+                if (pksm::crypto::swsh::verify(dt, length))
+                {
+                    ret = std::make_unique<SavZA>(dt, length);
+                }
                 break;
         }
 
